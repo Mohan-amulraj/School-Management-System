@@ -12,4 +12,3 @@ public class RefreshTokenRequestDTO {
 		this.token = token;
 	}
 }
-

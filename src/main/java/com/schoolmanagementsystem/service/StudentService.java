@@ -14,10 +14,11 @@ import com.schoolmanagementsystem.repository.StudentRepository;
 
 @Service
 public class StudentService {
+	
 	@Autowired
 	private StudentRepository studentRepository;
 	
-	public Student createStudent(Student student) {
+	public Student createStudent(final Student student) {
         return this.studentRepository.save(student);
     }
 	
@@ -25,12 +26,12 @@ public class StudentService {
 		return this.studentRepository.findAll();
 	}
 	
-	public Student getStudentById(Long id) {
+	public Student getStudentById(final Long id) {
 	return this.studentRepository.findById(id)
 			.orElseThrow(() -> new UserNotFoundException("Student not found for this id : " + id));
 	}
 	 
-	public String updateStudent(Long id,Student studentDetails) {
+	public String updateStudent(final Long id,final Student studentDetails) {
 		Student student = studentRepository.findById(id)
 				 .orElseThrow(() -> new UserNotFoundException("Student not found for this id : " + id));
 			studentDetails.setId(id);
@@ -38,18 +39,18 @@ public class StudentService {
 		return "Student id:"+id+" "+"successfully updated";
 	}
 	
-	public String deleteStudent(Long id) {
+	public String deleteStudent(final Long id) {
 		Student student = studentRepository.findById(id)
 		      .orElseThrow(() -> new UserNotFoundException("Student not found for this id : " + id));
 	     this.studentRepository.delete(student);
 	return "Student id:"+id+" "+"successfully deleted";
 	} 
 	
-	public Long countStudentBySchool(final long id) {
+	public Long countStudentBySchool(final Long id) {
        return this.studentRepository.countBySchoolId(id);
 	}
 	
-	public Page <Student> getStudentPage(int pageIndex,int pageSize,String field){
+	public Page <Student> getStudentPage(final int pageIndex,final int pageSize,final String field){
 		 Sort sort = Sort.by(Sort.Direction.ASC,field);
 		 Pageable pageable = PageRequest.of(pageIndex,pageSize,sort);
 		 return this.studentRepository.findAll(pageable);

@@ -16,34 +16,34 @@ import com.schoolmanagementsystem.service.SubjectService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/subject")
 public class SubjectController {
 
 	@Autowired
 	private SubjectService subjectService;
 
-	@PostMapping("/subject")
+	@PostMapping("/create")
 	public Subject createSubject(@RequestBody final Subject subject) {
-		return subjectService.createSubject(subject);
+		return this.subjectService.createSubject(subject);
 	}
 
-	@GetMapping("/subject")
+	@GetMapping("/retrieve")
 	public List<Subject> getAllSubject() {
-		return subjectService.getAllSubject();
+		return this.subjectService.getAllSubject();
 	}
 
-	@GetMapping("/subject/{id}")
+	@GetMapping("/retrieve/{id}")
 	public Subject getSubjectById(@PathVariable final Long id) {
-		return subjectService.getSubjectById(id);
+		return this.subjectService.getSubjectById(id);
 	}
 
-	@PutMapping("/subject/{id}")
+	@PutMapping("/update/{id}")
 	public String updateSubject(@PathVariable final Long id, @RequestBody final Subject subjectDetails) {
-		return subjectService.updateSubject(id, subjectDetails);
+		return this.subjectService.updateSubject(id, subjectDetails);
 	}
 
-	@DeleteMapping("/subject/{id}")
+	@DeleteMapping("/remove/{id}")
 	public void deleteSubject(@PathVariable final Long id) {
-		subjectService.deleteSubject(id);
+		this.subjectService.deleteSubject(id);
 	}
 }

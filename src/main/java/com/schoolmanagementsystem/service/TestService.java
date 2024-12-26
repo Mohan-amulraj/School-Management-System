@@ -10,34 +10,35 @@ import com.schoolmanagementsystem.repository.TestRepository;
 
 @Service
 public class TestService {
+
 	@Autowired
 	private TestRepository testRepository;
-	
-	public Test createTest(Test test) {
-        return this.testRepository.save(test);
-    }
-	
-	public List<Test> getAllTest(){
+
+	public Test createTest(final Test test) {
+		return this.testRepository.save(test);
+	}
+
+	public List<Test> getAllTest() {
 		return this.testRepository.findAll();
 	}
-	
-	public Test getTestById(Long id) {
-	return this.testRepository.findById(id)
-			.orElseThrow(() -> new UserNotFoundException("Test not found for this id : " + id));
+
+	public Test getTestById(final Long id) {
+		return this.testRepository.findById(id)
+				.orElseThrow(() -> new UserNotFoundException("Test not found for this id : " + id));
 	}
-	 
-	public String updateTest(Long id,Test testDetails) {
+
+	public String updateTest(final Long id, final Test testDetails) {
 		Test test = testRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException("Test not found for this id : " + id));
-			testDetails.setId(id);
-			this.testRepository.save(test);
-		return "Test id:"+id+" "+"successfully updated";
+		testDetails.setId(id);
+		this.testRepository.save(test);
+		return "Test id:" + id + " " + "successfully updated";
 	}
-	
-	public String deleteTest(Long id) {
+
+	public String deleteTest(final Long id) {
 		Test test = testRepository.findById(id)
-		      .orElseThrow(() -> new UserNotFoundException("Test not found for this id : " + id));
-	     this.testRepository.delete(test);
-	return "Test id:"+id+" "+"successfully deleted";
-	} 
+				.orElseThrow(() -> new UserNotFoundException("Test not found for this id : " + id));
+		this.testRepository.delete(test);
+		return "Test id:" + id + " " + "successfully deleted";
+	}
 }

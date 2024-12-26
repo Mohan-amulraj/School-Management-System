@@ -48,12 +48,12 @@ public class QuestionController {
 	}
 
 	@GetMapping("/retrieve/dto")
-	public List<QuestionDTO> getAllQuestionDto() {
-		return this.questionService.retrieveQuestions(); 
+	public List<QuestionDTO> getAllQuestionDTO() {
+		return this.questionService.retrieveQuestions();
 	}
 
-	@GetMapping("/retrievedto/{id}")
-	public QuestionDTO getQuestionDto(@PathVariable final Long id) {
-		return this.questionService.getQuestionDto(id);
+	@GetMapping("/retrieve/dto/{id}")
+	public QuestionDTO getQuestionDTO(@PathVariable final Long id) {
+		return this.questionService.getQuestionDTO(id);
 	}
 }

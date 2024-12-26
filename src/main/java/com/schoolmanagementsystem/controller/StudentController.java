@@ -55,10 +55,8 @@ public class StudentController {
     }
     
     @GetMapping("/pagination")
-    public Page<Student> getStudentpage(
-            @RequestParam int pageIndex,
-            @RequestParam int pageSize,
-            @RequestParam String field ) {
+    public Page<Student> getStudentpage(@RequestParam final int pageIndex, @RequestParam final int pageSize,
+            @RequestParam final String field ) {
         return studentService.getStudentPage(pageIndex,pageSize,field);
     }
 }

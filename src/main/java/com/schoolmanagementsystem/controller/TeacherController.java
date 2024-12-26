@@ -16,38 +16,38 @@ import com.schoolmanagementsystem.service.TeacherService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/teacher")
 public class TeacherController {
 
 	@Autowired
 	private TeacherService teacherService;
 
-	@PostMapping("/teacher")
+	@PostMapping("/create")
 	public Teacher createTeacher(@RequestBody final Teacher teacher) {
-		return teacherService.createTeacher(teacher);
+		return this.teacherService.createTeacher(teacher);
 	}
 
-	@GetMapping("/teacher")
+	@GetMapping("/retrieve")
 	public List<Teacher> getAllTeacher() {
-		return teacherService.getAllTeacher();
+		return this.teacherService.getAllTeacher();
 	}
 
-	@GetMapping("/teacher/{id}")
+	@GetMapping("/retrieve/{id}")
 	public Teacher getTeacherById(@PathVariable final Long id) {
-		return teacherService.getTeacherById(id);
+		return this.teacherService.getTeacherById(id);
 	}
 
 	@PutMapping("update/{id}")
 	public String updateTeacher(@PathVariable final Long id, @RequestBody final Teacher teacherDetails) {
-		return teacherService.updateTeacher(id, teacherDetails);
+		return this.teacherService.updateTeacher(id, teacherDetails);
 	}
 
-	@DeleteMapping("/teacher/{id}")
+	@DeleteMapping("/remove/{id}")
 	public void deleteTeacher(@PathVariable final Long id) {
-		teacherService.deleteTeacher(id);
+		this.teacherService.deleteTeacher(id);
 	}
 
-	@GetMapping("/teacher/count/{id}")
+	@GetMapping("/count/{id}")
 	public Long retrieveTeacherCountBySchool(@PathVariable final Long id) {
 		return this.teacherService.countTeacherBySchool(id);
 	}

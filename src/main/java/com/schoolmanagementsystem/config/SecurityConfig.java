@@ -37,9 +37,18 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf(AbstractHttpConfigurer::disable)
-				.authorizeHttpRequests(request -> request.requestMatchers("/api/v1/auth/**","/api/v1/user/**").permitAll()
-						.requestMatchers("api/admin/**").hasAnyAuthority(Role.ADMIN.name())
-						.requestMatchers("api/v1/user/**").hasAnyAuthority(Role.USER.name(), Role.ADMIN.name())
+				.authorizeHttpRequests(request -> request.requestMatchers("/api/v1/auth/**").permitAll()
+						.requestMatchers("api/v1/admin/**").hasAnyAuthority(Role.PRINCIPAL.name())
+						.requestMatchers("api/v1/user/**").permitAll()
+						.requestMatchers("api/school/**").hasAnyAuthority(Role.PRINCIPAL.name())
+						.requestMatchers("api/student/**").permitAll()
+						.requestMatchers("api/teacher/**").hasAnyAuthority(Role.PRINCIPAL.name(),Role.TEACHER.name())
+						.requestMatchers("api/subject/**").permitAll()
+						.requestMatchers("api/test/**").permitAll()
+						.requestMatchers("api/question/**").hasAnyAuthority(Role.PRINCIPAL.name(),Role.TEACHER.name())
+						.requestMatchers("api/student-answer/**").hasAnyAuthority(Role.PRINCIPAL.name(),Role.TEACHER.name())
+						.requestMatchers("api/student-answer/mark/**").hasAnyAuthority(Role.STUDENT.name())
+						.requestMatchers("api/question/retrieve/dto/**").hasAnyAuthority(Role.STUDENT.name())
 						.anyRequest().authenticated())
 				.sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authenticationProvider(authenticationProvider())
@@ -61,4 +70,3 @@ public class SecurityConfig {
 		return config.getAuthenticationManager();
 	}
 }
-

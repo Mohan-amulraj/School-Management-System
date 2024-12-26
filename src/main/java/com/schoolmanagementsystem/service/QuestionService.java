@@ -14,10 +14,11 @@ import com.schoolmanagementsystem.repository.QuestionRepository;
 
 @Service
 public class QuestionService {
+
 	@Autowired
 	private QuestionRepository questionRepository;
 
-	public Question createQuestion(Question question) {
+	public Question createQuestion(final Question question) {
 		return this.questionRepository.save(question);
 	}
 
@@ -25,12 +26,12 @@ public class QuestionService {
 		return this.questionRepository.findAll();
 	}
 
-	public Question getQuestionById(Long id) {
+	public Question getQuestionById(final Long id) {
 		return this.questionRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException("Question not found for this id : " + id));
 	}
 
-	public String updateQuestion(Long id, Question questionDetails) {
+	public String updateQuestion(final Long id, final Question questionDetails) {
 		Question question = questionRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException("Question not found for this id : " + id));
 		questionDetails.setId(id);
@@ -38,7 +39,7 @@ public class QuestionService {
 		return "Question id:" + id + " " + "successfully updated";
 	}
 
-	public String deleteQuestion(Long id) {
+	public String deleteQuestion(final Long id) {
 		Question question = questionRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException("Question not found for this id : " + id));
 		this.questionRepository.delete(question);
@@ -56,7 +57,7 @@ public class QuestionService {
 				.choice4(question.getChoice4()).build();
 	}
 
-	public QuestionDTO getQuestionDto(Long id) {
+	public QuestionDTO getQuestionDTO(final Long id) {
 		Optional<Question> question = questionRepository.findById(id);
 		if (question.isEmpty()) {
 			throw new UserNotFoundException("Question not found with id: " + id);
@@ -64,7 +65,7 @@ public class QuestionService {
 		return response(question.get());
 	}
 
-	public QuestionDTO response(Question question) {
+	public QuestionDTO response(final Question question) {
 		return QuestionDTO.builder()
 
 				.id(question.getId()).question(question.getQuestion()).choice1(question.getChoice1())

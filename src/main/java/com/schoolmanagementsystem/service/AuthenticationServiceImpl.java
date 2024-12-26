@@ -18,10 +18,7 @@ import com.schoolmanagementsystem.entity.User;
 import com.schoolmanagementsystem.enums.Role;
 import com.schoolmanagementsystem.repository.UserRepository;
 
-import lombok.RequiredArgsConstructor;
-
 @Service
-@RequiredArgsConstructor
 public class AuthenticationServiceImpl {
 
 	@Autowired
@@ -33,24 +30,32 @@ public class AuthenticationServiceImpl {
 	@Autowired
 	private JwtServiceImpl jwtService;
 
-	public User signUp(SignUpRequestDTO signUpRequestDTO) {
+	public User studentSignUp(final SignUpRequestDTO signUpRequestDTO) {
 		User user = new User();
 		user.setEmail(signUpRequestDTO.getEmail());
 		user.setPassword(passwordEncoder.encode(signUpRequestDTO.getPassword()));
-		user.setRole(Role.USER);
-		return userRepository.save(user);
+		user.setRole(Role.STUDENT);
+		return this.userRepository.save(user);
 	}
 
-	public JwtAuthenticationResponseDTO signIn(SignInRequestDTO signInRequestDTO) {
+	public User teacherSignUp(final SignUpRequestDTO signUpRequestDTO) {
+		User user = new User();
+		user.setEmail(signUpRequestDTO.getEmail());
+		user.setPassword(passwordEncoder.encode(signUpRequestDTO.getPassword()));
+		user.setRole(Role.TEACHER);
+		return this.userRepository.save(user);
+	}
+
+	public JwtAuthenticationResponseDTO signIn(final SignInRequestDTO signInRequestDTO) {
 		try {
-			authenticationManager.authenticate(
-					new UsernamePasswordAuthenticationToken(signInRequestDTO.getEmail(), signInRequestDTO.getPassword()));
+			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(signInRequestDTO.getEmail(),
+					signInRequestDTO.getPassword()));
 		} catch (BadCredentialsException e) {
 			throw new IllegalArgumentException("Incorrect email or password");
 		}
 
 		User user = userRepository.findByEmail(signInRequestDTO.getEmail()).orElseThrow(
-				() -> new UsernameNotFoundException("User not found with email: " + signInRequestDTO.getEmail()));
+				() -> new UsernameNotFoundException("user not found with email: " + signInRequestDTO.getEmail()));
 
 		String jwt = jwtService.generateToken(user);
 		String refreshToken = jwtService.generateRefreshToken(new HashMap<>(), user);
@@ -66,13 +71,15 @@ public class AuthenticationServiceImpl {
 		User user = new User();
 		user.setEmail(signUpRequestDTO.getEmail());
 		user.setPassword(passwordEncoder.encode(signUpRequestDTO.getPassword()));
-		user.setRole(Role.ADMIN);
-		return userRepository.save(user);
+		user.setRole(Role.PRINCIPAL);
+		return this.userRepository.save(user);
 	}
 
 	public JwtAuthenticationResponseDTO refreshToken(RefreshTokenRequestDTO refreshTokenRequestDTO) {
 		String userEmail = jwtService.extractUserName(refreshTokenRequestDTO.getToken());
+
 		User user = userRepository.findByEmail(userEmail).orElseThrow();
+
 		if (jwtService.isTokenValid(refreshTokenRequestDTO.getToken(), user)) {
 			var jwt = jwtService.generateToken(user);
 

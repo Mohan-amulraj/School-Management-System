@@ -6,8 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.schoolmanagementsystem.entity.Teacher;
 
 @Repository
-public interface TeacherRepository extends JpaRepository <Teacher, Long>{
-	
-		long countBySchoolId(final long id);
+public interface TeacherRepository extends JpaRepository<Teacher, Long> {
 
+	public Long countBySchoolId(final Long id);
 }

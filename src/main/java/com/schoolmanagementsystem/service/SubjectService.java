@@ -10,34 +10,35 @@ import com.schoolmanagementsystem.repository.SubjectRepository;
 
 @Service
 public class SubjectService {
+
 	@Autowired
 	private SubjectRepository subjectRepository;
-	
-	public Subject createSubject(Subject subject) {
-        return this.subjectRepository.save(subject);
-    }
-	
-	public List<Subject> getAllSubject(){
+
+	public Subject createSubject(final Subject subject) {
+		return this.subjectRepository.save(subject);
+	}
+
+	public List<Subject> getAllSubject() {
 		return this.subjectRepository.findAll();
 	}
-	
-	public Subject getSubjectById(Long id) {
-	return this.subjectRepository.findById(id)
-			.orElseThrow(() -> new UserNotFoundException("Subject not found for this id : " + id));
+
+	public Subject getSubjectById(final Long id) {
+		return this.subjectRepository.findById(id)
+				.orElseThrow(() -> new UserNotFoundException("Subject not found for this id : " + id));
 	}
-	 
-	public String updateSubject(Long id,Subject subjectDetails) {
+
+	public String updateSubject(final Long id, final Subject subjectDetails) {
 		Subject subject = subjectRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException("Subject not found for this id : " + id));
-			subjectDetails.setId(id);
-			this.subjectRepository.save(subject);
-		return "Subject id:"+id+" "+"successfully updated";
+		subjectDetails.setId(id);
+		this.subjectRepository.save(subject);
+		return "Subject id:" + id + " " + "successfully updated";
 	}
-	
-	public String deleteSubject(Long id) { 
+
+	public String deleteSubject(final Long id) {
 		Subject subject = subjectRepository.findById(id)
-		      .orElseThrow(() -> new UserNotFoundException("Subject not found for this id : " + id));
-	     this.subjectRepository.delete(subject);
-	return "Subject id:"+id+" "+"successfully deleted";
-	} 
+				.orElseThrow(() -> new UserNotFoundException("Subject not found for this id : " + id));
+		this.subjectRepository.delete(subject);
+		return "Subject id:" + id + " " + "successfully deleted";
+	}
 }

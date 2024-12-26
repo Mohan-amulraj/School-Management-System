@@ -10,10 +10,11 @@ import com.schoolmanagementsystem.repository.TeacherRepository;
 
 @Service
 public class TeacherService {
+	
 	@Autowired
 	private TeacherRepository teacherRepository;
 	
-	public Teacher createTeacher(Teacher teacher) {
+	public Teacher createTeacher(final Teacher teacher) {
         return this.teacherRepository.save(teacher);
     }
 	
@@ -21,12 +22,12 @@ public class TeacherService {
 		return this.teacherRepository.findAll();
 	}
 	
-	public Teacher getTeacherById(Long id) {
+	public Teacher getTeacherById(final Long id) {
 	return this.teacherRepository.findById(id)
 			.orElseThrow(() -> new UserNotFoundException("Teacher not found for this id : " + id));
 	}
 	 
-	public String updateTeacher(Long id,Teacher teacherDetails) {
+	public String updateTeacher(final Long id,final Teacher teacherDetails) {
 		Teacher teacher = teacherRepository.findById(id)
 				 .orElseThrow(() -> new UserNotFoundException("Teacher not found for this id : " + id));
 			teacherDetails.setId(id);
@@ -34,14 +35,14 @@ public class TeacherService {
 		return "Teacher id:"+id+" "+"successfully updated";
 	}
 	
-	public String deleteTeacher(Long id) {
+	public String deleteTeacher(final Long id) {
 		Teacher teacher = teacherRepository.findById(id)
 		      .orElseThrow(() -> new UserNotFoundException("Teacher not found for this id : " + id));
 	     this.teacherRepository.delete(teacher);
 	return "Teacher id:"+id+" "+"successfully deleted";
 	} 
 	
-	public Long countTeacherBySchool(final long id) {
+	public Long countTeacherBySchool(final Long id) {
         return this.teacherRepository.countBySchoolId(id);
 	}
 }

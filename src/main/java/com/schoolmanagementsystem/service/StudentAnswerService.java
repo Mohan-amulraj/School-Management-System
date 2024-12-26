@@ -16,10 +16,11 @@ import com.schoolmanagementsystem.repository.StudentAnswerRepository;
 
 @Service
 public class StudentAnswerService {
+	
 	@Autowired
 	private StudentAnswerRepository studentAnswerRepository;
 		
-	public StudentAnswer createStudentAnswer(StudentAnswer studentAnswer) {
+	public StudentAnswer createStudentAnswer(final StudentAnswer studentAnswer) {
         return this.studentAnswerRepository.save(studentAnswer);
     }
 	
@@ -27,12 +28,12 @@ public class StudentAnswerService {
 		return this.studentAnswerRepository.findAll();
 	}
 	
-	public StudentAnswer getStudentAnswerById(Long id) {
+	public StudentAnswer getStudentAnswerById(final Long id) {
 	return this.studentAnswerRepository.findById(id)
 			.orElseThrow(() -> new UserNotFoundException("StudentAnswer not found for this id : " + id));
 	}
 	 
-	public String updateStudentAnswer(Long id,StudentAnswer studentAnswerDetails) {
+	public String updateStudentAnswer(final Long id,final StudentAnswer studentAnswerDetails) {
 		StudentAnswer studentAnswer = studentAnswerRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException("StudentAnswer not found for this id : " + id));
 			studentAnswerDetails.setId(id);
@@ -40,7 +41,7 @@ public class StudentAnswerService {
 		return "StudentAnswer id:"+id+" "+"successfully updated";
 	}
 	
-	public String deleteStudentAnswer(Long id) {
+	public String deleteStudentAnswer(final Long id) {
 		StudentAnswer studentAnswer = studentAnswerRepository.findById(id)
 		      .orElseThrow(() -> new UserNotFoundException("StudentAnswer not found for this id : " + id));
 	     this.studentAnswerRepository.delete(studentAnswer);
@@ -48,7 +49,7 @@ public class StudentAnswerService {
 	} 
 	
 
-	public int studentMark(List<StudentAnswer> answers) {
+	public int studentMarks(List<StudentAnswer> answers) {
 		int mark = 0;
 		for(StudentAnswer studentAnswer : answers) {
 			Question question = studentAnswer.getQuestion();
@@ -66,14 +67,14 @@ public class StudentAnswerService {
 		List<Long> studentIds = studentAnswers.stream().map(StudentAnswer::getStudent).map(Student::getId).toList();
 	  Map<Long,String> allStudents = new HashMap<>();
 	   for(Long studentId : studentIds) {
-		   String mark = studentMarks(studentId,studentAnswers);
+		   String mark = studentMark(studentId,studentAnswers);
 		   allStudents.put(studentId,mark); 
 	   }
 	   return allStudents;
 	}
 	
-	public String studentMarks(Long id,List<StudentAnswer> answers) {
-		int mark = studentMark(answers.stream().filter(stud -> Objects.equals(stud.getStudent().getId(), id)).toList());
+	public String studentMark(final Long id,final List<StudentAnswer>answers) {
+		int mark = studentMarks(answers.stream().filter(stud -> Objects.equals(stud.getStudent().getId(), id)).toList());
 		return "Student Mark : " + mark;
 	}
 }

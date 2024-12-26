@@ -13,20 +13,16 @@ public class StudentAnswer {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
+
 	private Long id;
 	private String answer;
 
-	
 	@ManyToOne
-	
 	private Question question;
-	
+
 	@ManyToOne
-	
-	private Student student; 
-	
-    @ManyToOne
-	
-	private Test test; 
+	private Student student;
+
+	@ManyToOne
+	private Test test;
 }

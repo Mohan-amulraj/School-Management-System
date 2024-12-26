@@ -17,7 +17,7 @@ public class SchoolService {
 	@Autowired
 	private SchoolRepository schoolRepository;
 
-	public School createSchool(School school) {
+	public School createSchool(final School school) {
 		return this.schoolRepository.save(school);
 	}
 
@@ -25,12 +25,12 @@ public class SchoolService {
 		return this.schoolRepository.findAll();
 	}
 
-	public School getSchoolById(Long id) {
+	public School getSchoolById(final Long id) {
 		return this.schoolRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException("School not found for this id : " + id));
 	}
 
-	public String updateSchool(Long id, School schoolDetails) {
+	public String updateSchool(final Long id, final School schoolDetails) {
 		School school = schoolRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException("School not found for this id : " + id));
 		school.setAddress(schoolDetails.getAddress());
@@ -38,18 +38,18 @@ public class SchoolService {
 		return "School id:" + id + " " + "successfully updated";
 	}
 
-	public String deleteSchool(Long id) {
+	public String deleteSchool(final Long id) {
 		School school = schoolRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException("School not found for this id : " + id));
 		this.schoolRepository.delete(school);
 		return "School id:" + id + " " + "successfully deleted";
 	}
 
-	public long countSchool() {
-		return schoolRepository.count();
+	public Long countSchool() {
+		return this.schoolRepository.count();
 	}
 
-	public Page<School> getSchoolPage(int pageIndex, int pageSize, String field) {
+	public Page<School> getSchoolPage(final int pageIndex, final int pageSize, final String field) {
 		Sort sort = Sort.by(Sort.Direction.ASC, field);
 		Pageable pageable = PageRequest.of(pageIndex, pageSize, sort);
 		return this.schoolRepository.findAll(pageable);

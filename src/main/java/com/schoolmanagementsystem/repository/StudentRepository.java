@@ -7,6 +7,7 @@ import com.schoolmanagementsystem.entity.Student;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
-	
-	public long countBySchoolId(final long id);
+
+	public Long countBySchoolId(final Long id);
+
 }

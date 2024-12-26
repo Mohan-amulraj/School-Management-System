@@ -16,33 +16,33 @@ import com.schoolmanagementsystem.entity.Test;
 import com.schoolmanagementsystem.service.TestService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/test")
 public class TestController {
 
 	@Autowired
 	private TestService testService;
 
-	@PostMapping("/test")
+	@PostMapping("/create")
 	public Test createTest(@RequestBody final Test test) {
 		return this.testService.createTest(test);
 	}
 
-	@GetMapping("/test")
+	@GetMapping("/retrieve")
 	public List<Test> getAllTest() {
 		return this.testService.getAllTest();
 	}
 
-	@GetMapping("/test/{id}")
+	@GetMapping("/retrieve/{id}")
 	public Test getTestById(@PathVariable final Long id) {
 		return this.testService.getTestById(id);
 	}
 
-	@PutMapping("/test/{id}")
+	@PutMapping("/update/{id}")
 	public String updateTest(@PathVariable final Long id, @RequestBody final Test testDetails) {
 		return this.testService.updateTest(id, testDetails);
 	}
 
-	@DeleteMapping("/test/{id}")
+	@DeleteMapping("/remove/{id}")
 	public void deleteTest(@PathVariable final Long id) {
 		this.testService.deleteTest(id);
 	}

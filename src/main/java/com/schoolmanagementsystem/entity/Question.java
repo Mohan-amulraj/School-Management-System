@@ -7,14 +7,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
-
 @Entity
 @Data
 public class Question {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
+
 	private Long id;
 	private String question;
 	private String choice1;
@@ -22,15 +21,13 @@ public class Question {
 	private String choice3;
 	private String choice4;
 	private String crt_answer;
-	
-	@ManyToOne
-	
-	private Test test;
-	
-	@ManyToOne
-	
-	private Teacher teacher;
-	@ManyToOne
 
+	@ManyToOne
+	private Test test;
+
+	@ManyToOne
+	private Teacher teacher;
+
+	@ManyToOne
 	private Subject subject;
 }

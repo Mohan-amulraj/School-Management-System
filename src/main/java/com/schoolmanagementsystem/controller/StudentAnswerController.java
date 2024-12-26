@@ -18,44 +18,44 @@ import com.schoolmanagementsystem.entity.StudentAnswer;
 import com.schoolmanagementsystem.service.StudentAnswerService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/student-answer")
 public class StudentAnswerController {
 
 	@Autowired
 	private StudentAnswerService studentAnswerService;
 	
-	@PostMapping("/student-answer")
+	@PostMapping("/create")
 	public StudentAnswer createStudentAnswer(@RequestBody final StudentAnswer studentanswer) {
 		return this.studentAnswerService.createStudentAnswer(studentanswer);
 	}
 	
-	@GetMapping("/student-answer")
+	@GetMapping("/retrieve")
 	public List<StudentAnswer> getAllStudentAnswer(){
 		return this.studentAnswerService.getAllStudentAnswer();
 	}
 	
-	@GetMapping("student-answer/{id}")
+	@GetMapping("retrieve/{id}")
 	public StudentAnswer getStudentAnswerById(@PathVariable final Long id) {
 		return this.studentAnswerService.getStudentAnswerById(id);
 	}
 	
-	@PutMapping("/student-answer/{id}")
+	@PutMapping("/update/{id}")
 	public String updateStudentAnswer(@PathVariable final Long id,@RequestBody final StudentAnswer studentAnswerDetails ) {
 		return this.studentAnswerService.updateStudentAnswer(id,studentAnswerDetails);
 	}
 	
-	@DeleteMapping("/student-answer/{id}")
+	@DeleteMapping("/remove/{id}")
 	public void deleteStudentAnswer(@PathVariable final Long id) {
 		this.studentAnswerService.deleteStudentAnswer(id);
 	}
 	
-	@GetMapping("/students/marks")
+	@GetMapping("/mark")
 	public Map<Long,String> studentMarks(){
 		return this.studentAnswerService.allStudentMarks();
 	}
 	
-	@GetMapping("/student/mark/{id}")
-	public String studentMarks(@PathVariable final Long id) {
-		return this.studentAnswerService.studentMarks(id, getAllStudentAnswer());
+	@GetMapping("/mark/{id}")
+	public String studentMark(@PathVariable final Long id) {
+		return this.studentAnswerService.studentMark(id, getAllStudentAnswer());
 	}
 }

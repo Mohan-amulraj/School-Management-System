@@ -18,45 +18,45 @@ import com.schoolmanagementsystem.service.SchoolService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("api/school")
 public class SchoolController {
 
 	@Autowired
 	private SchoolService schoolService;
 
-	@PostMapping("/school")
+	@PostMapping("/create")
 	public School createSchool(@RequestBody final School school) {
 		return this.schoolService.createSchool(school);
 	}
 
-	@GetMapping("/school")
+	@GetMapping("/retrieve")
 	public List<School> getAllSchool() {
 		return schoolService.getAllSchool();
 	}
 
-	@GetMapping("/school/{id}")
+	@GetMapping("/retrieve/{id}")
 	public School getSchoolById(@PathVariable final Long id) {
 		return this.schoolService.getSchoolById(id);
 	}
 
-	@PutMapping("/school/{id}")
+	@PutMapping("/update/{id}")
 	public String updateStudent(@PathVariable final Long id, @RequestBody final School schoolDetails) {
 		return this.schoolService.updateSchool(id, schoolDetails);
 	}
 
-	@DeleteMapping("/school/{id}")
+	@DeleteMapping("/remove/{id}")
 	public void deleteSchool(@PathVariable final Long id) {
 		this.schoolService.deleteSchool(id);
 	}
 
-	@GetMapping("/school/count")
+	@GetMapping("/count")
 	public long getCountSchool() {
 		return schoolService.countSchool();
 	}
 
-	@GetMapping("/school/pagination")
-	public Page<School> getSchoolpage(@RequestParam int pageIndex, @RequestParam int pageSize,
-			@RequestParam String field) {
+	@GetMapping("/pagination")
+	public Page<School> getSchoolpage(@RequestParam final int pageIndex, @RequestParam final int pageSize,
+			@RequestParam final String field) {
 		return schoolService.getSchoolPage(pageIndex, pageSize, field);
 	}
 }
