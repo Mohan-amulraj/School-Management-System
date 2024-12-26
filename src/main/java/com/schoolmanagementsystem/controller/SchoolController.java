@@ -31,7 +31,7 @@ public class SchoolController {
 
 	@GetMapping("/retrieve")
 	public List<School> getAllSchool() {
-		return schoolService.getAllSchool();
+		return this.schoolService.getAllSchool();
 	}
 
 	@GetMapping("/retrieve/{id}")
@@ -51,12 +51,12 @@ public class SchoolController {
 
 	@GetMapping("/count")
 	public long getCountSchool() {
-		return schoolService.countSchool();
+		return this.schoolService.countSchool();
 	}
 
 	@GetMapping("/pagination")
 	public Page<School> getSchoolpage(@RequestParam final int pageIndex, @RequestParam final int pageSize,
 			@RequestParam final String field) {
-		return schoolService.getSchoolPage(pageIndex, pageSize, field);
+		return this.schoolService.getSchoolPage(pageIndex, pageSize, field);
 	}
 }

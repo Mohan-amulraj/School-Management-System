@@ -26,22 +26,22 @@ public class StudentController {
 
     @PostMapping("/create")
     public Student createStudent(@RequestBody final Student student) {
-        return studentService.createStudent(student);
+        return this.studentService.createStudent(student);
     }
     
     @GetMapping("/retrieve")
     public List<Student> getAllStudents() {
-        return studentService.getAllStudents();
+        return this.studentService.getAllStudents();
     }
 
     @GetMapping("/retrieve/{id}")
     public Student getStudentById(@PathVariable final Long id) {
-        return studentService.getStudentById(id);
+        return this.studentService.getStudentById(id);
     }
 
     @PutMapping("/update/{id}")
     public String updateStudent(@PathVariable final Long id, @RequestBody final Student studentDetails) {
-        return studentService.updateStudent(id, studentDetails);
+        return this.studentService.updateStudent(id, studentDetails);
     }
 
     @DeleteMapping("/remove/{id}")
@@ -57,6 +57,6 @@ public class StudentController {
     @GetMapping("/pagination")
     public Page<Student> getStudentpage(@RequestParam final int pageIndex, @RequestParam final int pageSize,
             @RequestParam final String field ) {
-        return studentService.getStudentPage(pageIndex,pageSize,field);
+        return this.studentService.getStudentPage(pageIndex,pageSize,field);
     }
 }
