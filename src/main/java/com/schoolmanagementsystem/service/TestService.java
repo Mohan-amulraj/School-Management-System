@@ -1,6 +1,7 @@
 package com.schoolmanagementsystem.service;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,18 +28,16 @@ public class TestService {
 				.orElseThrow(() -> new UserNotFoundException("Test not found for this id : " + id));
 	}
 
-	public String updateTest(final Long id, final Test testDetails) {
-		Test test = testRepository.findById(id)
+	public Test updateTest(final Long id, final Test testDetails) {
+		final Test test = testRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException("Test not found for this id : " + id));
 		testDetails.setId(id);
-		this.testRepository.save(test);
-		return "Test id:" + id + " " + "successfully updated";
+		return this.testRepository.save(test);
 	}
 
-	public String deleteTest(final Long id) {
-		Test test = testRepository.findById(id)
+	public void deleteTest(final Long id) {
+		final Test test = testRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException("Test not found for this id : " + id));
 		this.testRepository.delete(test);
-		return "Test id:" + id + " " + "successfully deleted";
 	}
 }

@@ -31,19 +31,17 @@ public class QuestionService {
 				.orElseThrow(() -> new UserNotFoundException("Question not found for this id : " + id));
 	}
 
-	public String updateQuestion(final Long id, final Question questionDetails) {
-		Question question = questionRepository.findById(id)
+	public Question updateQuestion(final Long id, final Question questionDetails) {
+		final Question question = questionRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException("Question not found for this id : " + id));
 		questionDetails.setId(id);
-		this.questionRepository.save(question);
-		return "Question id:" + id + " " + "successfully updated";
+		return this.questionRepository.save(question);
 	}
 
-	public String deleteQuestion(final Long id) {
-		Question question = questionRepository.findById(id)
+	public void deleteQuestion(final Long id) {
+		final Question question = questionRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException("Question not found for this id : " + id));
-		this.questionRepository.delete(question);
-		return "Question id:" + id + " " + "successfully deleted";
+		this.questionRepository.delete(question);		
 	}
 
 	public List<QuestionDTO> retrieveQuestions() {

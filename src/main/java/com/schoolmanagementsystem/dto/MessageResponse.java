@@ -2,9 +2,11 @@ package com.schoolmanagementsystem.dto;
 
 import java.util.Date;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class MessageResponse {
 
 	private int statusCode;
@@ -12,10 +14,10 @@ public class MessageResponse {
 	private String message;
 	private String description;
 
-	public MessageResponse(int statusCode, Date timestamp, String message, String description) {
+	public MessageResponse(final int statusCode,final Date timestamp,final String message, final String description) {
 		this.statusCode = statusCode;
 		this.timestamp = timestamp;
 		this.message = message;
-		this.description = description;
+		this.description = description;		
 	}
 }

@@ -1,6 +1,7 @@
 package com.schoolmanagementsystem.service;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ public class SubjectService {
 	}
 
 	public List<Subject> getAllSubject() {
-		return this.subjectRepository.findAll();
+		return this.subjectRepository.findAll();		
 	}
 
 	public Subject getSubjectById(final Long id) {
@@ -27,18 +28,16 @@ public class SubjectService {
 				.orElseThrow(() -> new UserNotFoundException("Subject not found for this id : " + id));
 	}
 
-	public String updateSubject(final Long id, final Subject subjectDetails) {
-		Subject subject = subjectRepository.findById(id)
+	public Subject updateSubject(final Long id, final Subject subjectDetails) {
+		final Subject subject = subjectRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException("Subject not found for this id : " + id));
 		subjectDetails.setId(id);
-		this.subjectRepository.save(subject);
-		return "Subject id:" + id + " " + "successfully updated";
+		return this.subjectRepository.save(subject);
 	}
 
-	public String deleteSubject(final Long id) {
-		Subject subject = subjectRepository.findById(id)
+	public void deleteSubject(final Long id) {
+		final Subject subject = subjectRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException("Subject not found for this id : " + id));
 		this.subjectRepository.delete(subject);
-		return "Subject id:" + id + " " + "successfully deleted";
 	}
 }

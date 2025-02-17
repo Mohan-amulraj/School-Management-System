@@ -2,5 +2,5 @@ package com.schoolmanagementsystem.enums;
 
 public enum Role {
 
-	PRINCIPAL, TEACHER, STUDENT;
+	PRINCIPAL, TEACHER, STUDENT, ADMIN;
 }

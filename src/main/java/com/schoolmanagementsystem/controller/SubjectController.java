@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
+import com.schoolmanagementsystem.dto.ResponseDTO;
 import com.schoolmanagementsystem.entity.Subject;
 import com.schoolmanagementsystem.service.SubjectService;
-
-import java.util.List;
+import com.schoolmanagementsystem.util.Constants;
 
 @RestController
 @RequestMapping("/api/subject")
@@ -23,27 +23,28 @@ public class SubjectController {
 	private SubjectService subjectService;
 
 	@PostMapping("/create")
-	public Subject createSubject(@RequestBody final Subject subject) {
-		return this.subjectService.createSubject(subject);
+	public ResponseDTO createSubject(@RequestBody final Subject subject) {
+		return new ResponseDTO(Constants.CREATED,200,"Subject created successfully",this.subjectService.createSubject(subject));
 	}
 
 	@GetMapping("/retrieve")
-	public List<Subject> getAllSubject() {
-		return this.subjectService.getAllSubject();
+	public ResponseDTO getAllSubject() {
+		return new ResponseDTO(Constants.RETRIEVED,200,"Subject retrieved successfully",this.subjectService.getAllSubject());
 	}
 
 	@GetMapping("/retrieve/{id}")
-	public Subject getSubjectById(@PathVariable final Long id) {
-		return this.subjectService.getSubjectById(id);
+	public ResponseDTO getSubjectById(@PathVariable final Long id) {
+		return new ResponseDTO(Constants.RETRIEVED,200,"Subject retrieved successfully", this.subjectService.getSubjectById(id));
 	}
 
 	@PutMapping("/update/{id}")
-	public String updateSubject(@PathVariable final Long id, @RequestBody final Subject subjectDetails) {
-		return this.subjectService.updateSubject(id, subjectDetails);
+	public ResponseDTO updateSubject(@PathVariable final Long id, @RequestBody final Subject subjectDetails) {
+		return new ResponseDTO(Constants.UPDATED,200,"Subject updated successfully",this.subjectService.updateSubject(id, subjectDetails));
 	}
 
 	@DeleteMapping("/remove/{id}")
-	public void deleteSubject(@PathVariable final Long id) {
+	public ResponseDTO deleteSubject(@PathVariable final Long id) {
 		this.subjectService.deleteSubject(id);
+		return new ResponseDTO(Constants.DELETED,200,"Subject deleted successfully",id);
 	}
 }

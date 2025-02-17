@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.schoolmanagementsystem.dto.ResponseDTO;
 import com.schoolmanagementsystem.entity.StudentAnswer;
 import com.schoolmanagementsystem.service.StudentAnswerService;
+import com.schoolmanagementsystem.util.Constants;
 
 @RestController
 @RequestMapping("/api/student-answer")
@@ -25,8 +27,8 @@ public class StudentAnswerController {
 	private StudentAnswerService studentAnswerService;
 	
 	@PostMapping("/create")
-	public StudentAnswer createStudentAnswer(@RequestBody final StudentAnswer studentanswer) {
-		return this.studentAnswerService.createStudentAnswer(studentanswer);
+	public ResponseDTO createStudentAnswer(@RequestBody final StudentAnswer studentanswer) {
+		return new ResponseDTO(Constants.CREATED,200,"Answer created successfully",this.studentAnswerService.createStudentAnswer(studentanswer));
 	}
 	
 	@GetMapping("/retrieve")
@@ -35,18 +37,19 @@ public class StudentAnswerController {
 	}
 	
 	@GetMapping("retrieve/{id}")
-	public StudentAnswer getStudentAnswerById(@PathVariable final Long id) {
-		return this.studentAnswerService.getStudentAnswerById(id);
+	public ResponseDTO getStudentAnswerById(@PathVariable final Long id) {
+		return new ResponseDTO(Constants.RETRIEVED,200,"Answer retrieved successfully",this.studentAnswerService.getStudentAnswerById(id));
 	}
 	
 	@PutMapping("/update/{id}")
-	public String updateStudentAnswer(@PathVariable final Long id,@RequestBody final StudentAnswer studentAnswerDetails ) {
-		return this.studentAnswerService.updateStudentAnswer(id,studentAnswerDetails);
+	public ResponseDTO updateStudentAnswer(@PathVariable final Long id,@RequestBody final StudentAnswer studentAnswerDetails ) {
+		return new ResponseDTO(Constants.UPDATED,200,"Answer updated successfully",this.studentAnswerService.updateStudentAnswer(id,studentAnswerDetails));
 	}
 	
 	@DeleteMapping("/remove/{id}")
-	public void deleteStudentAnswer(@PathVariable final Long id) {
-		this.studentAnswerService.deleteStudentAnswer(id);
+	public ResponseDTO deleteStudentAnswer(@PathVariable final Long id) {
+		 this.studentAnswerService.deleteStudentAnswer(id);
+		 return new ResponseDTO(Constants.DELETED,200,"Answer deleted successfully",id);
 	}
 	
 	@GetMapping("/mark")

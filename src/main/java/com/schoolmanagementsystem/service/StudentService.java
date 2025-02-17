@@ -1,6 +1,7 @@
 package com.schoolmanagementsystem.service;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,32 +28,30 @@ public class StudentService {
 	}
 	
 	public Student getStudentById(final Long id) {
-	return this.studentRepository.findById(id)
-			.orElseThrow(() -> new UserNotFoundException("Student not found for this id : " + id));
+		return this.studentRepository.findById(id)
+				.orElseThrow(() -> new UserNotFoundException("Student not found for this id : " + id));
 	}
 	 
-	public String updateStudent(final Long id,final Student studentDetails) {
-		Student student = studentRepository.findById(id)
-				 .orElseThrow(() -> new UserNotFoundException("Student not found for this id : " + id));
+	public Student updateStudent(final Long id,final Student studentDetails) {
+		final Student student = studentRepository.findById(id)
+				.orElseThrow(() -> new UserNotFoundException("Student not found for this id : " + id));
 			studentDetails.setId(id);
-			this.studentRepository.save(student);
-		return "Student id:"+id+" "+"successfully updated";
+			return this.studentRepository.save(student);
 	}
 	
-	public String deleteStudent(final Long id) {
-		Student student = studentRepository.findById(id)
-		      .orElseThrow(() -> new UserNotFoundException("Student not found for this id : " + id));
+	public void deleteStudent(final Long id) {
+		final Student student = studentRepository.findById(id)
+				.orElseThrow(() -> new UserNotFoundException("Student not found for this id : " + id));
 	     this.studentRepository.delete(student);
-	return "Student id:"+id+" "+"successfully deleted";
 	} 
 	
 	public Long countStudentBySchool(final Long id) {
        return this.studentRepository.countBySchoolId(id);
 	}
 	
-	public Page <Student> getStudentPage(final int pageIndex,final int pageSize,final String field){
-		 Sort sort = Sort.by(Sort.Direction.ASC,field);
-		 Pageable pageable = PageRequest.of(pageIndex,pageSize,sort);
+	public Page<Student> getStudentPage(final int index,final int size,final String field){
+		final Sort sort = Sort.by(Sort.Direction.ASC,field);
+		 final Pageable pageable = PageRequest.of(index,size,sort);
 		 return this.studentRepository.findAll(pageable);
 	 }
 }
